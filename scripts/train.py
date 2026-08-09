@@ -2,35 +2,47 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from chipcheck.utils import load_config, set_seed
+from chipcheck.data import build_dataloaders
+from chipcheck.models import build_model
+from chipcheck.train import Trainer
+from chipcheck.utils import ensure_dir, load_config, set_seed
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="베이스라인 모델 학습")
     parser.add_argument("--config", default="configs/default.yaml")
+    parser.add_argument("--epochs", type=int, default=None)
     args = parser.parse_args()
 
     cfg = load_config(ROOT / args.config)
+    if args.epochs is not None:
+        cfg["train"]["epochs"] = args.epochs
     set_seed(cfg["project"]["seed"])
 
-    if not cfg["data"].get("num_classes"):
-        print("[중단] configs/default.yaml 의 data.num_classes / class_names 를 먼저 설정하세요.")
-        print("데이터셋 선정(Phase 1) 완료 후 train DataLoader를 연결하면 학습이 시작됩니다.")
-        print("스켈레톤: src/chipcheck/train/trainer.py , models/builder.py")
-        return
+    # checkpoint 경로를 프로젝트 루트 기준으로
+    cfg["train"]["checkpoint_dir"] = str(ROOT / cfg["train"]["checkpoint_dir"])
 
-    # 데이터로더 연결 후:
-    # from chipcheck.models import build_model
-    # from chipcheck.train import Trainer
-    # model = build_model(cfg)
-    # Trainer(cfg).fit(train_loader, val_loader, model)
-    print("num_classes가 설정됨. DataLoader 구현 후 Trainer.fit()을 호출하세요.")
+    print("device will resolve inside Trainer; building loaders...")
+    train_loader, val_loader, test_loader = build_dataloaders(cfg, ROOT)
+    model = build_model(cfg)
+    trainer = Trainer(cfg)
+    print(f"device={trainer.device} model={cfg['model']['name']} epochs={cfg['train']['epochs']}")
+    result = trainer.fit(train_loader, val_loader, model)
+
+    out = ensure_dir(ROOT / "results" / "metrics")
+    hist_path = out / "train_history.json"
+    hist_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"best_val_acc={result['best_val_acc']:.4f}")
+    print(f"checkpoint → {cfg['train']['checkpoint_dir']}/best.pt")
+    print(f"history → {hist_path}")
+    print(f"test batches ready: {len(test_loader)} (evaluate.py 로 평가)")
 
 
 if __name__ == "__main__":

@@ -25,11 +25,14 @@ class Trainer:
             lr=self.cfg["train"]["lr"],
             weight_decay=self.cfg["train"]["weight_decay"],
         )
+        # 가중 샘플링을 쓰므로 CE는 기본값 (이중 보정 방지)
         criterion = nn.CrossEntropyLoss()
         history: dict[str, list] = {"train_loss": [], "val_acc": []}
 
         epochs = self.cfg["train"]["epochs"]
+        patience = self.cfg["train"].get("early_stopping_patience", 7)
         best_acc = -1.0
+        bad = 0
         for epoch in range(epochs):
             model.train()
             running = 0.0
@@ -51,8 +54,14 @@ class Trainer:
 
             if val_acc > best_acc:
                 best_acc = val_acc
+                bad = 0
                 path = Path(self.ckpt_dir) / "best.pt"
                 torch.save({"model": model.state_dict(), "cfg": self.cfg}, path)
+            else:
+                bad += 1
+                if bad >= patience:
+                    print(f"early stopping @ epoch {epoch+1}")
+                    break
 
         return {"history": history, "best_val_acc": best_acc}
 

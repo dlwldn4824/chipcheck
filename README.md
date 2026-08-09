@@ -71,14 +71,13 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# 데이터셋 후보 조사 메모
-python scripts/survey_datasets.py
-
-# 전처리 → 학습 → 평가 (데이터 준비 후)
-python scripts/preprocess.py --config configs/default.yaml
-python scripts/train.py --config configs/default.yaml
-python scripts/evaluate.py --config configs/default.yaml
+# 분할 CSV 생성 → 학습 → 평가
+python scripts/preprocess.py
+python scripts/train.py --epochs 5          # 빠른 스모크 테스트
+python scripts/train.py                     # 기본 15 epoch
+python scripts/evaluate.py
 ```
+
 
 ## 문서
 

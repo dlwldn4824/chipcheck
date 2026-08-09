@@ -1,43 +1,41 @@
 #!/usr/bin/env python3
+"""데이터 검증 + train/val/test 분할 CSV 생성 (학습 시 증강은 온더플라이)."""
+
 from __future__ import annotations
 
 import argparse
 import sys
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from chipcheck.preprocess import PreprocessPipeline
-from chipcheck.utils import ensure_dir, load_config
+from chipcheck.data import make_splits
+from chipcheck.utils import load_config
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="기본 전처리 파이프라인")
+    parser = argparse.ArgumentParser(description="전처리: 분할 CSV 생성")
     parser.add_argument("--config", default="configs/default.yaml")
     args = parser.parse_args()
 
     cfg = load_config(ROOT / args.config)
-    raw = ROOT / cfg["data"]["raw_dir"]
-    out = ensure_dir(ROOT / cfg["data"]["processed_dir"])
-    pipe = PreprocessPipeline(image_size=cfg["data"]["image_size"])
+    image_root = ROOT / cfg["data"]["raw_dir"]
+    counts: Counter[str] = Counter()
+    for name in cfg["data"]["class_names"]:
+        folder = image_root / name
+        n = len(list(folder.glob("*"))) if folder.is_dir() else 0
+        counts[name] = n
+        print(f"  {name}: {n}")
 
-    images = [
-        p
-        for p in raw.rglob("*")
-        if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"}
-    ]
-    if not images:
-        print(f"[안내] raw 이미지가 없습니다: {raw}")
-        print("데이터셋 다운로드 후 data/raw/ 아래에 넣고 다시 실행하세요.")
+    total = sum(counts.values())
+    if total == 0:
+        print(f"[중단] 이미지 없음: {image_root}")
         return
 
-    for src in images:
-        rel = src.relative_to(raw)
-        dst = out / rel
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        pipe.process_file(src).save(dst.with_suffix(".png"))
-    print(f"전처리 완료: {len(images)}장 → {out}")
+    out = make_splits(cfg, ROOT)
+    print(f"총 {total}장 → 분할 저장: {out}")
 
 
 if __name__ == "__main__":
