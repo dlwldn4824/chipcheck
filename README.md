@@ -2,6 +2,8 @@
 
 **AI 기반 반도체 불량 이미지 분석 SW + FPGA 기반 추론 가속기**
 
+GitHub: https://github.com/dlwldn4824/chipcheck
+
 | 항목 | 내용 |
 | --- | --- |
 | 팀명 | 칩췍 (chip check) |
