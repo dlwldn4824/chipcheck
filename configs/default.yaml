@@ -1,0 +1,76 @@
+project:
+  name: chipcheck
+  team: 칩췍
+  seed: 42
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  splits_dir: data/splits
+  # Phase 1에서 확정 후 채움
+  dataset_name: null
+  image_size: 224
+  num_classes: null
+  class_names: []
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+preprocess:
+  resize: true
+  normalize: true
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  augment:
+    horizontal_flip: true
+    rotation_degrees: 15
+    brightness_contrast: true
+    noise: false
+
+model:
+  # Phase 2~3 후보: resnet18 | efficientnet_b0 | mobilenet_v3_small | yolo
+  name: resnet18
+  pretrained: true
+  task: classification  # classification | detection
+  dropout: 0.2
+
+train:
+  batch_size: 32
+  epochs: 30
+  lr: 0.001
+  weight_decay: 0.0001
+  optimizer: adamw
+  scheduler: cosine
+  early_stopping_patience: 7
+  device: auto  # auto | cpu | cuda | mps
+  num_workers: 4
+  checkpoint_dir: results/checkpoints
+
+evaluate:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - confusion_matrix
+  confidence_threshold: 0.5
+  review_threshold: 0.3  # 낮으면 재검토
+  output_dir: results/metrics
+  figure_dir: results/figures
+  error_case_dir: results/error_cases
+
+inference:
+  batch_size: 1
+  save_visualization: true
+
+fpga:
+  enabled: false
+  quantize: true
+  target_bits: 8
+  export_format: onnx  # onnx | tflite | custom
+  compare_backends: [cpu, gpu, fpga]
+
+camera:
+  enabled: false
+  source: 0
+  fps_target: 15
