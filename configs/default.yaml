@@ -4,17 +4,23 @@ project:
   seed: 42
 
 data:
-  raw_dir: data/raw
+  raw_dir: data/raw/carinthia_s/images
   processed_dir: data/processed
   splits_dir: data/splits
-  # Phase 1에서 확정 후 채움
-  dataset_name: null
+  dataset_name: carinthia_s
   image_size: 224
-  num_classes: null
-  class_names: []
+  num_classes: 6
+  class_names:
+    - class_1
+    - class_2
+    - class_3
+    - class_4
+    - class_5
+    - class_6
   train_ratio: 0.7
   val_ratio: 0.15
   test_ratio: 0.15
+
 
 preprocess:
   resize: true
