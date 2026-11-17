@@ -1,0 +1,65 @@
+{
+  "counts": {
+    "class_1": 55,
+    "class_2": 8,
+    "class_3": 4008,
+    "class_4": 289,
+    "class_5": 4,
+    "class_6": 227
+  },
+  "fpr_budget": 0.05,
+  "per_class": {
+    "class_1": {
+      "n_images": 55,
+      "auroc": 0.9948,
+      "detect_rate_at_fpr": 1.0,
+      "threshold": 836.4696382934507
+    },
+    "class_2": {
+      "n_images": 8,
+      "auroc": 1.0,
+      "detect_rate_at_fpr": 1.0,
+      "threshold": 922.3899289907345
+    },
+    "class_3": {
+      "n_images": 4008,
+      "auroc": 0.9972,
+      "detect_rate_at_fpr": 0.998,
+      "threshold": 4077.8363086250324
+    },
+    "class_4": {
+      "n_images": 289,
+      "auroc": 0.9991,
+      "detect_rate_at_fpr": 1.0,
+      "threshold": 755.8682737223381
+    },
+    "class_5": {
+      "n_images": 4,
+      "auroc": 0.9996,
+      "detect_rate_at_fpr": 1.0,
+      "threshold": 930.2013737813477
+    },
+    "class_6": {
+      "n_images": 227,
+      "auroc": 0.9999,
+      "detect_rate_at_fpr": 1.0,
+      "threshold": 912.3722394597561
+    }
+  },
+  "note": "특징 추출기는 6종을 모두 보고 학습했으므로 완전한 미지 클래스보다 낙관적.",
+  "rare_combined": {
+    "classes": [
+      "class_1",
+      "class_2",
+      "class_5"
+    ],
+    "n_rare_images": 67,
+    "auroc": 0.9961,
+    "detect_rate_at_fpr": 1.0,
+    "n_common_test": 679
+  },
+  "classifier_on_rare_test": {
+    "n": 10,
+    "correct": 9
+  }
+}
