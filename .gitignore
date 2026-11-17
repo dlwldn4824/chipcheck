@@ -21,6 +21,8 @@ data/splits/**
 !data/splits/.gitkeep
 results/checkpoints/**
 !results/checkpoints/.gitkeep
+results/handoff/**
+results/chipcheck_handoff_*.zip
 *.pt
 *.pth
 *.onnx

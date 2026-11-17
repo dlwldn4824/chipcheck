@@ -148,7 +148,23 @@ pip install -r requirements.txt
 python scripts/preprocess.py
 python scripts/train.py --epochs 5
 python scripts/evaluate.py
+python scripts/export_handoff.py   # FPGA/양자화 담당자에게 넘길 패키지 생성
 ```
+
+## FPGA/양자화 인계
+
+`scripts/export_handoff.py` 가 양자화 담당이 요청한 자료를 한 번에 묶어
+`results/handoff/` 와 zip으로 만든다.
+
+| 산출물 | 내용 |
+| --- | --- |
+| `model/` | float32 `.pth` + 저장소 없이 돌아가는 `model_def.py` (+ ONNX) |
+| `calibration/` | INT8 보정용 이미지 300장 (train 스플릿에서만, 224×224 PNG) |
+| `test/` | 테스트셋 689장 + 정답 + float 모델 로짓/예측 |
+| `metadata/` | 전처리 규격 · 클래스 순서 · float 정확도 |
+
+ONNX까지 포함하려면 `pip install onnx onnxscript` 후 재실행한다
+(없으면 그 단계만 건너뛰고 나머지는 그대로 생성된다).
 
 ## 문서
 

@@ -14,7 +14,10 @@ torch>=2.2
 torchvision>=0.17
 timm>=1.0
 
-# Optional: detection / export
+# Optional: detection
 # ultralytics>=8.2
+
+# Optional: ONNX export (scripts/export_handoff.py --onnx)
 # onnx>=1.16
+# onnxscript>=0.1
 # onnxruntime>=1.18
