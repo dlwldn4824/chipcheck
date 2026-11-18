@@ -40,3 +40,7 @@ results/chipcheck_handoff_*.zip
 .env
 .env.*
 credentials.*
+
+# 생성 문서
+*.docx
+*.pdf
