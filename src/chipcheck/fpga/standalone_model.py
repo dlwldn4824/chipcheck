@@ -101,3 +101,38 @@ def predict(model: nn.Module, paths: Sequence[str | Path], device: str = "cpu"):
     x = preprocess_batch(paths).to(device)
     logits = model(x)
     return logits.cpu(), logits.argmax(dim=1).cpu()
+
+
+class FeatureAndLogits(nn.Module):
+    """특징 512-d와 로짓 6개를 함께 내보내는 래퍼.
+
+    보드에서 Mahalanobis 관문을 쓰려면 분류 확률만으로는 부족하다. 거리 계산이
+    avgpool 출력(512-d)을 입력으로 받기 때문이다. 학습 시점에는 forward hook으로
+    꺼냈지만, DPU 컴파일러에는 hook이 없다. 그래서 양자화 전에 이 래퍼로 감싸서
+    출력이 두 개인 그래프로 만든다. DPU 컴파일러는 다중 출력을 지원한다.
+
+    반환 순서는 (features, logits)로 고정한다. 보드 쪽 코드가 이 순서에 의존한다.
+    """
+
+    def __init__(self, backbone: nn.Module):
+        super().__init__()
+        self.backbone = backbone
+
+    def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        m = self.backbone
+        x = m.conv1(x)
+        x = m.bn1(x)
+        x = m.relu(x)
+        x = m.maxpool(x)
+        x = m.layer1(x)
+        x = m.layer2(x)
+        x = m.layer3(x)
+        x = m.layer4(x)
+        x = m.avgpool(x)
+        feats = torch.flatten(x, 1)
+        return feats, m.fc(feats)
+
+
+def wrap_dual_output(model: nn.Module) -> FeatureAndLogits:
+    """학습된 ResNet을 (특징, 로짓) 두 출력 모델로 감싼다."""
+    return FeatureAndLogits(model).eval()
