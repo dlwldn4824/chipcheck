@@ -1,0 +1,90 @@
+{
+  "source": "Carinthia-S 세그멘테이션 마스크 4,591장 전수 측정",
+  "note": "데이터셋은 결함 이름을 제공하지 않는다. team_name은 측정된 형태 통계에 name_from_stats() 규칙을 적용해 팀이 붙인 이름이며, 공정상의 공식 결함 분류명이 아니다.",
+  "classes": {
+    "class_1": {
+      "n_images": 55,
+      "n_with_defect_mask": 55,
+      "stats": {
+        "empty_frac": 0.0,
+        "area_frac_med": 0.0795,
+        "n_blobs_med": 3.0,
+        "elongation_med": 1.8276,
+        "elongation_p90": 3.4891,
+        "fill_med": 0.2357
+      },
+      "team_name": "확산형 다중 결함",
+      "description": "여러 덩어리가 흩어져 넓게 퍼진 형태 (파티클 산포·얼룩 계열)"
+    },
+    "class_2": {
+      "n_images": 8,
+      "n_with_defect_mask": 8,
+      "stats": {
+        "empty_frac": 0.0,
+        "area_frac_med": 0.0192,
+        "n_blobs_med": 3.0,
+        "elongation_med": 2.5919,
+        "elongation_p90": 24.9479,
+        "fill_med": 0.0526
+      },
+      "team_name": "선형 결함",
+      "description": "한 방향으로 가늘고 길게 이어진 형태 (스크래치·균열 계열)"
+    },
+    "class_3": {
+      "n_images": 4008,
+      "n_with_defect_mask": 4008,
+      "stats": {
+        "empty_frac": 0.0,
+        "area_frac_med": 0.0167,
+        "n_blobs_med": 1.0,
+        "elongation_med": 1.2364,
+        "elongation_p90": 1.7348,
+        "fill_med": 0.7083
+      },
+      "team_name": "소형 단일 결함",
+      "description": "경계가 뚜렷한 작은 덩어리 하나. 화면의 2.5% 미만"
+    },
+    "class_4": {
+      "n_images": 289,
+      "n_with_defect_mask": 289,
+      "stats": {
+        "empty_frac": 0.0,
+        "area_frac_med": 0.0737,
+        "n_blobs_med": 1.0,
+        "elongation_med": 1.3925,
+        "elongation_p90": 1.7202,
+        "fill_med": 0.748
+      },
+      "team_name": "대형 단일 결함",
+      "description": "경계가 뚜렷한 큰 덩어리 하나. 화면의 5% 이상을 차지한다"
+    },
+    "class_5": {
+      "n_images": 4,
+      "n_with_defect_mask": 4,
+      "stats": {
+        "empty_frac": 0.0,
+        "area_frac_med": 0.0269,
+        "n_blobs_med": 1.0,
+        "elongation_med": 1.3829,
+        "elongation_p90": 1.4293,
+        "fill_med": 0.7752
+      },
+      "team_name": "중형 단일 결함",
+      "description": "경계가 뚜렷한 덩어리 하나. 화면의 2.5~5%를 차지한다"
+    },
+    "class_6": {
+      "n_images": 227,
+      "n_with_defect_mask": 1,
+      "stats": {
+        "empty_frac": 0.9956,
+        "area_frac_med": 0.0002,
+        "n_blobs_med": 3.0,
+        "elongation_med": 1.8571,
+        "elongation_p90": 1.8571,
+        "fill_med": 0.4505
+      },
+      "team_name": "정상",
+      "description": "결함 영역이 표시되지 않은 이미지. 마스크가 비어 있다"
+    }
+  }
+}
