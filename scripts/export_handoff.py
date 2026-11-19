@@ -32,6 +32,20 @@ from chipcheck.models import build_model  # noqa: E402
 from chipcheck.utils import load_config, resolve_device  # noqa: E402
 
 
+def _onnx_opset(path: Path):
+    """실제로 기록된 opset. 요청한 값과 다를 수 있어 파일에서 직접 읽는다."""
+    try:
+        import onnx
+        m = onnx.load(str(path), load_external_data=False)
+        return {o.domain or "ai.onnx": o.version for o in m.opset_import}
+    except Exception:
+        return None
+
+
+class SkipPlain(Exception):
+    """--no-onnx-plain 일 때 단일 출력 ONNX를 건너뛰기 위한 신호."""
+
+
 def _write_json(path: Path, obj) -> None:
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -42,11 +56,19 @@ def main() -> None:
     ap.add_argument("--ckpt", default="results/checkpoints/best.pt")
     ap.add_argument("--out", default="results/handoff")
     ap.add_argument("--n-calib", type=int, default=300, help="보정용 이미지 장수")
-    ap.add_argument("--onnx", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--onnx", action=argparse.BooleanOptionalAction, default=True,
+                    help="특징+로짓 두 출력 ONNX (batch 1 고정) 동봉")
+    ap.add_argument("--onnx-plain", action=argparse.BooleanOptionalAction, default=False,
+                    help="로짓만 내는 가변 batch ONNX도 함께 동봉 (가중치가 한 벌 더 들어가 약 45MB 증가)")
     ap.add_argument(
         "--test-images", action=argparse.BooleanOptionalAction, default=True,
         help="테스트셋 원본 이미지 동봉 (약 25MB)",
     )
+    ap.add_argument("--gate", action=argparse.BooleanOptionalAction, default=True,
+                    help="Mahalanobis 관문 파라미터(.npz) 동봉")
+    ap.add_argument("--cause", action=argparse.BooleanOptionalAction, default=True,
+                    help="원인 엔진 지식베이스·가상 로그·데모 동봉")
+    ap.add_argument("--cache", default="results/metrics/_logit_cache.npz")
     ap.add_argument("--zip", action=argparse.BooleanOptionalAction, default=True)
     args = ap.parse_args()
 
@@ -82,21 +104,38 @@ def main() -> None:
     n_params = sum(p.numel() for p in model.parameters())
     print(f"  모델: {arch}  파라미터 {n_params:,}개  → model/{weights_name}")
 
-    onnx_name = None
+    onnx_name = onnx_dual_name = None
     if args.onnx:
-        try:
-            from chipcheck.fpga import export_onnx
+        from chipcheck.fpga.export import export_onnx, export_onnx_dual
 
+        dummy = torch.zeros(1, 3, size, size)
+        try:
+            if not args.onnx_plain:
+                raise SkipPlain
             onnx_name = f"chipcheck_{arch}.onnx"
-            dummy = torch.zeros(1, 3, size, size)
             try:
                 export_onnx(model.cpu(), dummy, pkg / "model" / onnx_name)
             finally:
                 model.to(device)  # 실패해도 추론용 디바이스로 되돌린다
-            print(f"  ONNX → model/{onnx_name}")
+            print(f"  ONNX → model/{onnx_name}  (로짓 1개 출력, batch 가변)")
+        except SkipPlain:
+            onnx_name = None
         except Exception as exc:  # onnx/onnxscript 미설치 등
             onnx_name = None
             print(f"  [건너뜀] ONNX 내보내기 실패: {type(exc).__name__}: {exc}")
+        try:
+            # 보드에서 Mahalanobis 관문을 쓰려면 특징 512-d가 함께 나와야 한다.
+            # 배치 축은 1로 고정한다. Vitis AI 계열 컴파일러가 동적 배치를 꺼린다.
+            onnx_dual_name = f"chipcheck_{arch}_dual_b1.onnx"
+            try:
+                export_onnx_dual(model.cpu(), dummy, pkg / "model" / onnx_dual_name,
+                                 fixed_batch=True)
+            finally:
+                model.to(device)
+            print(f"  ONNX → model/{onnx_dual_name}  (특징+로짓 2개 출력, batch 1 고정)")
+        except Exception as exc:
+            onnx_dual_name = None
+            print(f"  [건너뜀] 이중 출력 ONNX 실패: {type(exc).__name__}: {exc}")
 
     # ── 2. 보정용 이미지 (train 스플릿에서만) ────────────────────────────
     rows = read_split(ROOT, cfg)
@@ -158,6 +197,78 @@ def main() -> None:
         files=np.array([Path(r["path"]).name for r in test_rows]),
     )
     print(f"  테스트셋 {len(test_rows)}장 + float 로짓 → test/")
+
+    # ── 4.5 Mahalanobis 관문 파라미터 ───────────────────────────────────
+    gate_file = None
+    if args.gate:
+        cache = ROOT / args.cache
+        if not cache.exists():
+            print(f"  [건너뜀] 관문: 특징 캐시 없음 ({args.cache}). "
+                  f"python scripts/calibrate.py 먼저 실행")
+        else:
+            from chipcheck.evaluate.calibration import MahalanobisScorer
+            from chipcheck.fpga.gate import gate_score, save_gate
+            sys.path.insert(0, str(ROOT / "scripts"))
+            from export_gate import (  # noqa: E402
+                risk_controlled, threshold_at_fpr, zero_error_threshold,
+            )
+
+            z = np.load(cache)
+            tr_f, tr_y = z["train_feats"].astype(np.float64), z["train_y"]
+            va_f, va_y, va_l = (z["val_feats"].astype(np.float64), z["val_y"],
+                                z["val_logits"].astype(np.float64))
+            scorer = MahalanobisScorer.fit(tr_f, tr_y, num_classes)
+            s_tr = gate_score(tr_f, scorer.means, scorer.precision)
+            s_va = gate_score(va_f, scorer.means, scorer.precision)
+            ok_va = va_l.argmax(1) == va_y
+            th = {
+                "zero_error_val": zero_error_threshold(s_va, ok_va),
+                "risk_1pct_val": risk_controlled(s_va, ok_va),
+                "novelty_fpr5_train": threshold_at_fpr(s_tr, 0.05),
+                "novelty_fpr1_train": threshold_at_fpr(s_tr, 0.01),
+            }
+            gate_file = "mahalanobis_gate.npz"
+            save_gate(pkg / "model" / gate_file, scorer.means, scorer.precision,
+                      {k: float(v) for k, v in th.items()},
+                      {"feature_layer": "resnet18 avgpool, 512-d, flatten",
+                       "quantized_features": False,
+                       "class_names": class_names,
+                       "covariance": "클래스 공통(tied) + shrinkage",
+                       "usage": "score = gate_score(feats, means, precision); "
+                                "score < threshold 이면 사람에게 넘긴다.",
+                       "warning": "float32 특징 기준값이다. INT8 양자화 후에는 "
+                                  "양자화 특징으로 다시 내보내야 한다."})
+            shutil.copyfile(ROOT / "src/chipcheck/fpga/gate.py", pkg / "model" / "gate.py")
+            print(f"  관문 → model/{gate_file}  means {scorer.means.shape} "
+                  f"precision {scorer.precision.shape}")
+
+    # ── 4.6 원인 축소 엔진 (지식베이스 · 가상 로그 · 데모) ───────────────
+    cause_ok = False
+    kb_src = ROOT / "data/cause_kb/kb.csv"
+    if args.cause and kb_src.exists():
+        cdir = pkg / "cause"
+        (cdir / "logs").mkdir(parents=True, exist_ok=True)
+        for name in ("kb.csv", "classes.csv"):
+            f = ROOT / "data/cause_kb" / name
+            if f.exists():
+                shutil.copyfile(f, cdir / name)
+        for f in sorted((ROOT / "data/cause_kb/logs").glob("*")):
+            shutil.copyfile(f, cdir / "logs" / f.name)
+        # `PYTHONPATH=. python demo_cause.py` 가 그대로 되도록 import 경로를 지켜 복사한다
+        shutil.copytree(ROOT / "src/chipcheck/cause", cdir / "chipcheck" / "cause",
+                        dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        (cdir / "chipcheck" / "__init__.py").write_text(
+            '"""칩췍 원인 엔진 (인계 패키지용 최소 패키지)."""\n', encoding="utf-8")
+        for sc in ("demo_cause.py", "make_synthetic_logs.py", "eval_cause.py"):
+            shutil.copyfile(ROOT / "scripts" / sc, cdir / sc)
+        for m in ("cause_engine.json", "class_morphology.json"):
+            f = ROOT / "results/metrics" / m
+            if f.exists():
+                shutil.copyfile(f, pkg / "metadata" / m)
+        cause_ok = True
+        n_causes = sum(1 for _ in open(cdir / "kb.csv", encoding="utf-8")) - 1
+        print(f"  원인 엔진 → cause/  (원인 {n_causes}개, 가상 로그 3종, 데모 스크립트)")
 
     # ── 4. 메타데이터 ────────────────────────────────────────────────────
     from sklearn.metrics import (
@@ -236,6 +347,10 @@ def main() -> None:
             "num_classes": num_classes,
             "weights_file": weights_name,
             "onnx_file": onnx_name,
+            "onnx_dual_file": onnx_dual_name,
+            "onnx_dual_outputs": ["features(1,512)", "logits(1,6)"],
+            "onnx_opset": _onnx_opset(pkg / "model" / onnx_dual_name) if onnx_dual_name else None,
+            "gate_file": gate_file,
             "framework": f"pytorch {torch.__version__}",
             "n_parameters": int(n_params),
             "precision": "float32",
@@ -248,8 +363,9 @@ def main() -> None:
 
     # ── 5. README + 체크섬 ───────────────────────────────────────────────
     (pkg / "README.md").write_text(
-        _readme(arch, weights_name, onnx_name, size, mean, std, num_classes,
-                class_names, len(calib_rows), len(test_rows), acc, float_acc["f1_macro"]),
+        _readme(arch, weights_name, onnx_name, onnx_dual_name, gate_file, cause_ok,
+                size, mean, std, num_classes, class_names, len(calib_rows),
+                len(test_rows), acc, float_acc["f1_macro"]),
         encoding="utf-8",
     )
     write_manifest(pkg)
@@ -263,8 +379,62 @@ def main() -> None:
     print(f"\n완료 — float test accuracy {acc:.4f}, macro-F1 {float_acc['f1_macro']:.4f}")
 
 
-def _readme(arch, weights, onnx, size, mean, std, nc, names, n_calib, n_test, acc, f1) -> str:
-    onnx_line = f"- `model/{onnx}` — ONNX (opset 17, 동적 batch)\n" if onnx else ""
+def _readme(arch, weights, onnx, onnx_dual, gate, cause_ok, size, mean, std, nc,
+            names, n_calib, n_test, acc, f1) -> str:
+    onnx_line = f"- `model/{onnx}` — ONNX (opset 17, batch 가변, 로짓만)\n" if onnx else ""
+    if onnx_dual:
+        onnx_line += (f"- `model/{onnx_dual}` — ONNX (batch 1 고정, "
+                      f"**특징 512-d + 로짓** 두 출력). 보드에서 관문을 쓰려면 이쪽입니다.\n")
+
+    gate_block = ("관문 파라미터가 이번 패키지에 없습니다. "
+                  "`python scripts/calibrate.py` 뒤에 다시 내보내 주세요.") if not gate else f"""\
+softmax 신뢰도로는 자동 통과를 걸 수 없습니다. 오답의 평균 신뢰도가 0.897로 정답의
+0.995와 거의 붙어 있기 때문입니다. 대신 마지막 층 특징(512-d) 공간에서 학습 분포
+중심까지의 거리를 씁니다.
+
+- `model/{gate}` — `means (C,512)`, `precision (512,512)`, 임계값 4종
+- `model/gate.py` — 거리 계산 함수. numpy만 쓰고 torch에 의존하지 않습니다.
+
+```python
+import numpy as np
+from gate import load_gate, gate_score
+g = load_gate("model/{gate}")
+score = gate_score(feats_512d, g["means"], g["precision"])
+if score < g["thresholds"]["novelty_fpr5_train"]:
+    ...  # 사람에게 넘긴다
+```
+
+임계값은 네 개입니다. `novelty_fpr5_train` 이 가장 안전한 쪽으로, 시험셋 기준
+92.0%를 오류 0건으로 통과시킵니다. `risk_1pct_val` 은 99.0%를 통과시키지만
+오답 11건이 섞입니다.
+
+**중요 — INT8 양자화 후**: 양자화된 특징값은 float과 다릅니다. 위 평균과
+공분산은 float32 특징으로 계산한 값이므로, 양자화 모델로 train 특징을 다시 뽑아
+`python scripts/export_gate.py --feats <새 npz>` 로 한 번 더 내보내야
+보드에서 임계값이 맞습니다.
+
+DPU는 로짓만 내보내면 이 관문을 쓸 수 없습니다. 위 `_dual_b1.onnx` 처럼 특징과
+로짓을 함께 내보내는 그래프로 컴파일하세요. 거리 계산은 512×512 행렬 곱 하나라
+PS의 ARM 코어에서 수 ms면 끝납니다."""
+
+    cause_block = "이번 패키지에 포함되지 않았습니다." if not cause_ok else """\
+결함 로그 텍스트와 이미지 판정을 함께 써서 원인 후보를 좁히는 엔진입니다. LLM을
+쓰지 않고 BM25 역색인으로 동작하며, 외부 의존성이 없어 보드에서 그대로 돕니다.
+
+- `cause/kb.csv` — 원인 42개. 팹이 바뀌면 이 표만 다시 채웁니다
+- `cause/classes.csv` — 클래스별 형태 이름 (마스크에서 측정한 값 기반)
+- `cause/logs/` — KLARF · SECS/GEM · 평면 CSV 세 포맷의 가상 로그 + 정답표
+- `cause/chipcheck/cause/` — 어댑터·엔진·스키마 소스
+- `cause/demo_cause.py` — 콘솔 시연
+
+```bash
+cd cause && PYTHONPATH=. python demo_cause.py --cases 3
+python demo_cause.py --format flat_csv      # 어댑터만 바꾼다
+python demo_cause.py --inflate 1000         # 원인 1,000개 규모 속도
+```
+
+측정값은 `metadata/cause_engine.json` 에 있습니다. 로그 문구가 지식베이스에서
+파생되므로 실제 팹 정확도가 아니라 잡음 속 검색 성능입니다."""
     return f"""# 칩췍 — 양자화/FPGA 인계 패키지
 
 Carinthia-S SEM 웨이퍼 결함 분류 모델. 아래 자료만으로 INT8 양자화와 보드 추론을
@@ -324,7 +494,13 @@ accuracy는 불균형 때문에 쉽게 높게 나오니 **macro-F1을 같이** �
 로짓을 직접 비교하려면 `float_reference_outputs.npz` 를 쓰면 샘플 단위로
 어디서 틀어졌는지 볼 수 있습니다.
 
-## 6. 체크섬
+## 6. Mahalanobis 관문 (보드에서 "모르는 결함" 기각)
+{gate_block}
+
+## 7. 원인 축소 엔진
+{cause_block}
+
+## 8. 체크섬
 `MANIFEST.json` 에 파일별 크기와 sha256이 있습니다.
 """
 

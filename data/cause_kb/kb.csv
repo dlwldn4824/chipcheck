@@ -1,0 +1,43 @@
+cause_id,name,step,equipment_hint,defect_classes,morphology,log_keywords,action,reference
+LITHO-01,포토레지스트 코팅 두께 불균일,litho,TRACK,class_1,도포 방향을 따라 넓게 퍼진 얼룩 여러 개,COAT THICKNESS DEVIATION resist thickness alarm 도포 두께 편차 RPM,코터 RPM과 디스펜스 유량 점검 후 더미 웨이퍼 재도포,FDC coat module
+LITHO-02,노광 초점 이탈,litho,SCANNER,class_3;class_4;class_5,경계가 흐린 단일 패턴 결함,FOCUS OFFSET OUT OF SPEC defocus leveling error 초점 보정 실패,스캐너 레벨링 센서 교정 및 초점 오프셋 재설정,scanner leveling log
+LITHO-03,현상액 잔류,litho,TRACK,class_1,현상 후 남은 얼룩이 여러 곳에 흩어짐,DEVELOP RINSE TIME SHORT developer residue 린스 시간 부족,현상 린스 시간 연장 및 노즐 막힘 확인,develop recipe
+LITHO-04,레지스트 기포,litho,TRACK,class_3,작고 둥근 단일 공동,BUBBLE DETECT dispense pump air 디스펜스 기포,디스펜스 펌프 탈기 및 레지스트 보틀 교체,dispense pump
+LITHO-05,마스크 오염,litho,SCANNER,class_3;class_4,동일 좌표에 반복되는 단일 결함,RETICLE PARTICLE pellicle contamination 레티클 이물,레티클 검사 및 펠리클 교체,reticle inspection
+LITHO-06,정렬 오차,litho,SCANNER,class_4,패턴이 밀려 생긴 큰 단일 결함,OVERLAY ERROR alignment mark not found 정렬 마크 인식 실패,정렬 마크 재측정 및 오버레이 보정값 갱신,overlay metrology
+ETCH-01,챔버 폴리머 재증착,etch,ETCHER,class_1;class_3,식각면에 작은 점이 여러 개 재부착,CHAMBER WALL DEPOSIT polymer redeposition 챔버 벽 증착물,챔버 웨트 클리닝 및 시즈닝 웨이퍼 투입,chamber PM log
+ETCH-02,식각 종말점 검출 실패,etch,ETCHER,class_4;class_5,과식각으로 생긴 넓은 단일 함몰,EPD NOT DETECTED endpoint timeout overetch 종말점 미검출,EPD 광학창 청소 및 종말점 파장 재설정,EPD trace
+ETCH-03,RF 전력 불안정,etch,ETCHER,class_1,식각 깊이가 들쭉날쭉한 다중 결함,RF POWER FLUCTUATION reflected power high 반사 전력 상승,매칭 네트워크 점검 및 RF 케이블 접지 확인,FDC RF trace
+ETCH-04,가스 유량 편차,etch,MFC,class_1;class_4,식각률 차이로 생긴 넓은 변색,MFC FLOW DEVIATION gas flow out of range 유량 이탈,MFC 교정 및 가스 라인 누설 점검,MFC calibration
+ETCH-05,정전척 흡착 불량,etch,ESC,class_2,웨이퍼가 미끄러져 생긴 긴 선형 자국,ESC CLAMP FAIL dechuck error backside He leak 척 흡착 실패,정전척 표면 세정 및 He 백사이드 압력 점검,ESC maintenance
+ETCH-06,마이크로마스킹,etch,ETCHER,class_1,식각되지 않은 미세 돌기가 군집,MICROMASKING grass formation 잔류 돌기,식각 화학종 비율 조정 및 전처리 세정 강화,etch recipe
+CMP-01,슬러리 응집 입자,cmp,POLISHER,class_2,연마 방향으로 길게 난 긁힘,SLURRY AGGLOMERATE scratch detected 슬러리 응집,슬러리 필터 교체 및 공급 라인 플러싱,slurry delivery
+CMP-02,패드 컨디셔닝 부족,cmp,POLISHER,class_1,연마면 전체에 남은 다중 얼룩,PAD CONDITION ALARM conditioner disk worn 패드 컨디셔너 마모,컨디셔너 디스크 교체 및 컨디셔닝 레시피 조정,pad life counter
+CMP-03,과연마에 의한 디싱,cmp,POLISHER,class_4;class_5,넓게 파인 단일 함몰,OVERPOLISH dishing erosion 과연마 시간 초과,연마 시간 단축 및 종말점 모터 전류 기준 재설정,CMP endpoint
+CMP-04,리테이너 링 마모,cmp,POLISHER,class_2,웨이퍼 가장자리의 선형 자국,RETAINER RING WEAR edge profile alarm 링 마모,리테이너 링 교체 및 가장자리 프로파일 재측정,PM schedule
+CMP-05,연마 후 세정 부족,cmp,CLEANER,class_1,세정되지 않은 슬러리 잔류물이 산포,POST CMP CLEAN SHORT brush pressure low 브러시 압력 저하,브러시 압력 복구 및 린스 시간 연장,post-CMP clean
+CVD-01,전구체 공급 불안정,cvd,CVD,class_1,막 두께가 고르지 않아 생긴 다중 얼룩,PRECURSOR FLOW UNSTABLE bubbler level low 전구체 잔량 부족,전구체 보틀 교체 및 버블러 온도 안정화,FDC precursor trace
+CVD-02,박막 박리,cvd,CVD,class_4,막이 들떠 생긴 큰 단일 결함,FILM PEELING adhesion loss blister 막 들뜸,전처리 세정 추가 및 접착층 두께 상향,film stress log
+CVD-03,샤워헤드 막힘,cvd,CVD,class_1,공급 구멍 패턴을 따라 반복되는 결함,SHOWERHEAD CLOG pressure rise 샤워헤드 차압 상승,샤워헤드 세정 또는 교체,chamber PM log
+CVD-04,챔버 파티클 낙하,cvd,CVD,class_3;class_4;class_5,무작위 위치의 단일 입자,PARTICLE COUNT HIGH chamber particle monitor 파티클 카운트 초과,챔버 퍼지 및 파티클 모니터 재측정,particle monitor
+CVD-05,기판 온도 편차,cvd,HEATER,class_1,히터 존 경계를 따라 생긴 변색,HEATER ZONE DEVIATION substrate temp alarm 존별 온도 편차,히터 존 교정 및 열전대 점검,FDC heater trace
+CLEAN-01,세정액 농도 이탈,clean,WETBENCH,class_1,세정되지 않은 잔류물이 넓게 산포,CHEMICAL CONC OUT OF SPEC bath concentration 약액 농도 이탈,약액 교환 및 농도 측정기 교정,bath monitor
+CLEAN-02,건조 중 워터마크,clean,SPINDRYER,class_1,건조 흔적이 여러 갈래로 남음,WATERMARK DRY FAIL IPA flow low 건조 불량,IPA 유량 복구 및 스핀 건조 속도 상향,dry module
+CLEAN-03,메가소닉 출력 저하,clean,WETBENCH,class_3,제거되지 않은 작은 입자 하나,MEGASONIC POWER LOW transducer fail 메가소닉 출력 저하,트랜스듀서 교체 및 출력 재교정,megasonic log
+CLEAN-04,린스 수질 불량,clean,WETBENCH,class_1,물 자국이 여러 곳에 남음,DI WATER RESISTIVITY LOW TOC high 초순수 비저항 저하,초순수 라인 점검 및 필터 교체,DI water monitor
+IMPL-01,이온빔 전류 불안정,implant,IMPLANTER,class_1,도즈 편차로 생긴 넓은 변색,BEAM CURRENT UNSTABLE dose uniformity alarm 빔 전류 불안정,이온 소스 교체 및 빔 튜닝 재실시,FDC beam trace
+IMPL-02,차징에 의한 손상,implant,IMPLANTER,class_3;class_5,국소적으로 파인 작은 단일 결함,CHARGING DAMAGE electron shower fail 차징 손상,전자 샤워 출력 복구 및 도즈율 하향,charge monitor
+IMPL-03,포토레지스트 탄화,implant,IMPLANTER,class_4,레지스트가 눌어붙어 생긴 큰 덩어리,RESIST BURN outgassing pressure spike 레지스트 탄화,도즈율 하향 및 웨이퍼 냉각 강화,implant recipe
+THERM-01,급속열처리 온도 오버슈트,thermal,RTP,class_4,열응력으로 생긴 큰 단일 결함,RTP OVERSHOOT pyrometer deviation 온도 오버슈트,파이로미터 교정 및 램프 출력 프로파일 수정,RTP trace
+THERM-02,퍼니스 보트 오염,thermal,FURNACE,class_1,보트 접촉부를 따라 생긴 다중 결함,BOAT CONTAMINATION quartz particle 보트 오염,석영 보트 세정 또는 교체,furnace PM
+METAL-01,스퍼터 타깃 노듈,metal,SPUTTER,class_3;class_4;class_5,튀어나온 입자가 막에 박힘,TARGET NODULE arcing detect 타깃 아킹,타깃 교체 및 아킹 카운트 모니터링,sputter log
+METAL-02,시드층 결손,metal,PLATER,class_4,도금되지 않은 넓은 공백,SEED VOID plating current low 시드 결손,시드층 두께 상향 및 전처리 세정 강화,plating recipe
+METAL-03,전해액 기포,metal,PLATER,class_3,도금막 속 작은 단일 공동,BUBBLE IN BATH degas unit fail 전해액 기포,탈기 장치 점검 및 전해액 순환 증가,plating bath
+HNDL-01,로봇 핸들러 긁힘,,ROBOT,class_2,이송 방향을 따라 난 직선 긁힘,WAFER SLIP robot teach error blade contact 이송 중 접촉,로봇 티칭 재실시 및 블레이드 패드 교체,robot teach log
+HNDL-02,카세트 슬롯 마찰,,LOADPORT,class_2,웨이퍼 가장자리에서 시작되는 선형 자국,SLOT SCRATCH cassette misalign 카세트 정렬 불량,로드포트 정렬 보정 및 카세트 교체,loadport log
+HNDL-03,진공척 자국,,CHUCK,class_3,척 패턴 위치에 남는 단일 자국,CHUCK MARK vacuum leak 척 자국,진공척 표면 세정 및 패드 교체,chuck PM
+FAB-01,클린룸 파티클 유입,,,class_1;class_3,무작위 위치의 작은 입자 다수,FFU ALARM cleanroom particle count 청정도 경보,FFU 필터 점검 및 해당 구역 청정도 재측정,cleanroom monitor
+FAB-02,정전기 방전 손상,,,class_3,국소적으로 탄 작은 흔적,ESD EVENT ionizer fail 정전기 방전,이오나이저 출력 점검 및 접지 저항 측정,ESD audit
+FAB-03,장비 간 교차 오염,,,class_1,이전 공정 물질이 여러 곳에 부착,CROSS CONTAMINATION queue time exceed 큐타임 초과,큐타임 관리 강화 및 장비 전용화 검토,queue time rule
+MET-01,검사 장비 오검출,,INSPECTOR,class_6,결함 영역이 표시되지 않음,FALSE DETECT nuisance defect recipe sensitivity 오검출,검사 레시피 감도 하향 및 뉴슨스 필터 적용,inspection recipe
+MET-02,초점 흐림에 의한 허상,,SEM,class_6,실제 결함 없이 흐릿한 이미지,SEM FOCUS DRIFT image blur 초점 드리프트,SEM 초점 자동 보정 및 재촬영,SEM log

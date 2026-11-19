@@ -1,0 +1,1142 @@
+# KLARF를 본뜬 가상 파일. 실제 KLARF는 장비·버전마다 필드가 다르다.
+FileVersion 1 2;
+FileTimestamp 11-19-26 09:00:00;
+
+LotID "LOT1409";
+WaferID "W24";
+StepID "unknown";
+InspectionStationID "INSPECTOR01";
+Recipe "GEN_C41";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0001 -66.64 -85.41 9.21 images/class_6/CASE0001.jpg;
+EventList
+  INFO wafer loaded slot 23 carrier LOT1409
+  DETAIL 오검출
+  INFO 온도 안정화 완료
+  WARN FALSE DETECT recipe
+  WARN CHARGING 손상
+  INFO MFC setpoint reached
+  INFO robot handoff complete
+  WARN SHORT 부족
+EndOfFile;
+
+LotID "LOT7224";
+WaferID "W04";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_C54";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0002 51.05 60.55 8.27 images/class_1/CASE0002.jpg;
+EventList
+  ERROR CHAMBER polymer redeposition
+  INFO recipe ETCH_C54 started
+  INFO wafer loaded slot 3 carrier LOT7224
+  DETAIL 챔버 벽
+  INFO exhaust flow nominal
+  WARN MARK 척
+  WARN not found
+  INFO 온도 안정화 완료
+EndOfFile;
+
+LotID "LOT9751";
+WaferID "W24";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_B30";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0003 -70.54 -76.01 6.82 images/class_3/CASE0003.jpg;
+EventList
+  WARN pellicle contamination 레티클
+  INFO exhaust flow nominal
+  WARN vacuum 자국
+  INFO wafer loaded slot 3 carrier LOT9751
+  WARN RETAINER RING
+  INFO chamber pressure stable 5.0 mTorr
+  DETAIL 이물
+  INFO robot handoff complete
+EndOfFile;
+
+LotID "LOT7543";
+WaferID "W12";
+StepID "cmp";
+InspectionStationID "CLEANER02";
+Recipe "CMP_B27";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0004 -61.95 -102.55 0.24 images/class_1/CASE0004.jpg;
+EventList
+  INFO recipe CMP_B27 started
+  DETAIL low 브러시 압력
+  WARN He 흡착
+  WARN 초점 드리프트
+  WARN queue time 12 min remaining
+  INFO MFC setpoint reached
+  INFO exhaust flow nominal
+  ALARM POST CMP pressure
+EndOfFile;
+
+LotID "LOT9317";
+WaferID "W04";
+StepID "cmp";
+InspectionStationID "CLEANER02";
+Recipe "CMP_C91";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0005 -70.48 111.73 5.19 images/class_1/CASE0005.jpg;
+EventList
+  WARN alarm 두께
+  WARN CROSS 초과
+  WARN queue time 12 min remaining
+  DETAIL brush 브러시 압력
+  INFO robot handoff complete
+  WARN CMP CLEAN SHORT
+  INFO 온도 안정화 완료
+  INFO wafer loaded slot 3 carrier LOT9317
+EndOfFile;
+
+LotID "LOT6107";
+WaferID "W13";
+StepID "cmp";
+InspectionStationID "POLISHER01";
+Recipe "CMP_C66";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0006 11.77 67.01 10.61 images/class_1/CASE0006.jpg;
+EventList
+  INFO 온도 안정화 완료
+  INFO wafer loaded slot 2 carrier LOT6107
+  WARN OF 보정
+  DETAIL 컨디셔너 마모
+  INFO robot handoff complete
+  WARN 농도 이탈
+  INFO recipe CMP_C66 started
+  ALARM PAD CONDITION worn
+EndOfFile;
+
+LotID "LOT4981";
+WaferID "W16";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D34";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0007 -134.82 149.78 10.07 images/class_3/CASE0007.jpg;
+EventList
+  INFO recipe GEN_D34 started
+  INFO robot handoff complete
+  ERROR CHUCK MARK leak
+  INFO MFC setpoint reached
+  WARN RTP deviation
+  WARN BEAM CURRENT
+  DETAIL 자국
+  INFO 온도 안정화 완료
+EndOfFile;
+
+LotID "LOT3724";
+WaferID "W14";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_D71";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0008 -132.94 2.35 10.25 images/class_4/CASE0008.jpg;
+EventList
+  WARN 보트 오염
+  DETAIL 정렬 마크 실패
+  INFO 온도 안정화 완료
+  INFO 슬롯 매핑 확인 완료
+  INFO MFC setpoint reached
+  WARN level 전구체
+  INFO chamber pressure stable 5.0 mTorr
+  ERROR OVERLAY ERROR mark
+EndOfFile;
+
+LotID "LOT4853";
+WaferID "W13";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_A82";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0009 11.29 1.77 1.76 images/class_3/CASE0009.jpg;
+EventList
+  INFO robot handoff complete
+  INFO interlock cleared
+  DETAIL 레티클
+  INFO chamber pressure stable 5.0 mTorr
+  ALARM RETICLE PARTICLE pellicle
+  WARN fail 손상
+  WARN ionizer 방전
+  INFO 온도 안정화 완료
+EndOfFile;
+
+LotID "LOT5002";
+WaferID "W12";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_C30";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0010 40.29 98.8 0.72 images/class_1/CASE0010.jpg;
+EventList
+  INFO recipe CLEAN_C30 started
+  ALARM SPEC bath concentration
+  INFO chamber pressure stable 5.0 mTorr
+  WARN CLOG pressure
+  WARN CHUCK 자국
+  INFO 슬롯 매핑 확인 완료
+  DETAIL 약액 농도 이탈
+  INFO interlock cleared
+EndOfFile;
+
+LotID "LOT5291";
+WaferID "W06";
+StepID "cvd";
+InspectionStationID "CVD04";
+Recipe "CVD_D80";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0011 109.38 142.86 9.77 images/class_1/CASE0011.jpg;
+EventList
+  DETAIL 온도 편차
+  INFO robot handoff complete
+  INFO wafer loaded slot 2 carrier LOT5291
+  INFO exhaust flow nominal
+  WARN TIME 부족
+  WARN HEATER ZONE 존별
+  WARN queue time 12 min remaining
+  WARN POWER 출력
+EndOfFile;
+
+LotID "LOT3938";
+WaferID "W24";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_C62";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0012 131.77 -115.4 11.65 images/class_1/CASE0012.jpg;
+EventList
+  INFO 온도 안정화 완료
+  DETAIL uniformity alarm
+  WARN arcing detect
+  INFO wafer loaded slot 11 carrier LOT3938
+  WARN SHORT 부족
+  ERROR BEAM CURRENT dose
+  INFO MFC setpoint reached
+  WARN queue time 12 min remaining
+EndOfFile;
+
+LotID "LOT1626";
+WaferID "W04";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_D54";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0013 -52.15 59.16 6.74 images/class_1/CASE0013.jpg;
+EventList
+  INFO chamber pressure stable 5.0 mTorr
+  WARN DETECTED endpoint
+  INFO wafer loaded slot 14 carrier LOT1626
+  INFO 온도 안정화 완료
+  WARN formation 잔류 돌기
+  WARN DI 초순수
+  INFO MFC setpoint reached
+EndOfFile;
+
+LotID "LOT7211";
+WaferID "W22";
+StepID "cmp";
+InspectionStationID "POLISHER01";
+Recipe "CMP_B88";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0014 95.53 75.34 8.14 images/class_2/CASE0014.jpg;
+EventList
+  WARN 샤워헤드 상승
+  WARN chamber 파티클
+  INFO interlock cleared
+  ALARM scratch detected 슬러리
+  DETAIL 응집
+  INFO robot handoff complete
+  INFO 슬롯 매핑 확인 완료
+  INFO 온도 안정화 완료
+EndOfFile;
+
+LotID "LOT3414";
+WaferID "W01";
+StepID "cmp";
+InspectionStationID "POLISHER01";
+Recipe "CMP_A41";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0015 17.22 125.24 1.63 images/class_4/CASE0015.jpg;
+EventList
+  ERROR OVERPOLISH dishing 과연마
+  INFO exhaust flow nominal
+  WARN FOCUS 초점
+  INFO 슬롯 매핑 확인 완료
+  INFO recipe CMP_A41 started
+  WARN particle 청정도
+  INFO 온도 안정화 완료
+  DETAIL 시간
+EndOfFile;
+
+LotID "LOT9702";
+WaferID "W18";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_C66";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0016 -35.09 -104.16 2.72 images/class_1/CASE0016.jpg;
+EventList
+  DETAIL 전력 상승
+  INFO MFC setpoint reached
+  INFO chamber pressure stable 5.0 mTorr
+  ALARM reflected power 반사
+  INFO 슬롯 매핑 확인 완료
+  INFO 온도 안정화 완료
+  WARN NODULE arcing
+  WARN pyrometer 오버슈트
+EndOfFile;
+
+LotID "LOT6421";
+WaferID "W18";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_D63";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0017 -49.16 53.74 4.97 images/class_1/CASE0017.jpg;
+EventList
+  WARN queue time 12 min remaining
+  WARN BEAM dose alarm
+  INFO exhaust flow nominal
+  INFO MFC setpoint reached
+  WARN leveling error
+  DETAIL 빔 전류
+  INFO interlock cleared
+  WARN FFU cleanroom
+EndOfFile;
+
+LotID "LOT3091";
+WaferID "W20";
+StepID "etch";
+InspectionStationID "ETCHER07";
+Recipe "ETCH_A60";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0018 -82.73 -129.41 11.5 images/class_2/CASE0018.jpg;
+EventList
+  DETAIL backside leak 흡착 실패
+  INFO exhaust flow nominal
+  WARN scratch detected
+  INFO robot handoff complete
+  WARN DETECT dispense
+  ERROR ESC CLAMP dechuck
+  INFO MFC setpoint reached
+  INFO 슬롯 매핑 확인 완료
+EndOfFile;
+
+LotID "LOT5051";
+WaferID "W07";
+StepID "litho";
+InspectionStationID "TRACK01";
+Recipe "LITHO_A89";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0019 59.16 -59.53 8.27 images/class_1/CASE0019.jpg;
+EventList
+  INFO interlock cleared
+  INFO 슬롯 매핑 확인 완료
+  WARN erosion 초과
+  WARN DEVELOP RINSE TIME
+  DETAIL SHORT 시간
+  INFO recipe LITHO_A89 started
+  WARN CONTAMINATION quartz
+  INFO chamber pressure stable 5.0 mTorr
+EndOfFile;
+
+LotID "LOT6688";
+WaferID "W18";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_D94";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0020 -66.32 -14.76 9.06 images/class_4/CASE0020.jpg;
+EventList
+  INFO exhaust flow nominal
+  ERROR EPD DETECTED timeout
+  DETAIL overetch 종말점
+  WARN plating current
+  INFO chamber pressure stable 5.0 mTorr
+  INFO interlock cleared
+  WARN 챔버 증착물
+  INFO robot handoff complete
+EndOfFile;
+
+LotID "LOT6511";
+WaferID "W01";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D51";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0021 -83.52 57.54 3.81 images/class_3/CASE0021.jpg;
+EventList
+  DETAIL 자국
+  WARN HEATER temp
+  ERROR MARK leak 척
+  INFO recipe GEN_D51 started
+  WARN bubbler 부족
+  INFO exhaust flow nominal
+  INFO 온도 안정화 완료
+  INFO MFC setpoint reached
+EndOfFile;
+
+LotID "LOT8753";
+WaferID "W18";
+StepID "unknown";
+InspectionStationID "LOADPORT01";
+Recipe "GEN_C64";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0022 99.79 -61.13 4.46 images/class_1/CASE0022.jpg;
+EventList
+  WARN cleanroom count 청정도
+  INFO recipe GEN_C64 started
+  INFO 온도 안정화 완료
+  WARN pyrometer 오버슈트
+  INFO MFC setpoint reached
+  INFO robot handoff complete
+  DETAIL 경보
+  WARN FLOW bubbler
+EndOfFile;
+
+LotID "LOT9751";
+WaferID "W05";
+StepID "cvd";
+InspectionStationID "CVD04";
+Recipe "CVD_C15";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0023 -124.45 -75.54 6.79 images/class_1/CASE0023.jpg;
+EventList
+  INFO recipe CVD_C15 started
+  WARN SEED 결손
+  INFO interlock cleared
+  INFO 슬롯 매핑 확인 완료
+  WARN SHOWERHEAD CLOG pressure
+  INFO robot handoff complete
+  WARN polymer redeposition
+  DETAIL 샤워헤드
+EndOfFile;
+
+LotID "LOT9561";
+WaferID "W13";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_D66";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0024 -63.57 -65.18 10.34 images/class_1/CASE0024.jpg;
+EventList
+  WARN DETECT 오검출
+  ALARM UNSTABLE uniformity alarm
+  DETAIL 빔 불안정
+  INFO interlock cleared
+  INFO recipe IMPLANT_D66 started
+  INFO chamber pressure stable 5.0 mTorr
+  WARN DEPOSIT polymer
+  INFO 온도 안정화 완료
+EndOfFile;
+
+LotID "LOT5334";
+WaferID "W21";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_B64";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0025 116.83 70.36 7.32 images/class_3/CASE0025.jpg;
+EventList
+  INFO wafer loaded slot 23 carrier LOT5334
+  ALARM RETICLE PARTICLE pellicle
+  DETAIL 레티클
+  WARN FAIL error
+  WARN queue time 12 min remaining
+  INFO interlock cleared
+  WARN FILM 들뜸
+  INFO 슬롯 매핑 확인 완료
+EndOfFile;
+
+LotID "LOT4750";
+WaferID "W22";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_A96";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0026 -123.58 -74.28 1.57 images/class_4/CASE0026.jpg;
+EventList
+  DETAIL SPEC leveling 보정 실패
+  ERROR FOCUS OUT OF
+  INFO robot handoff complete
+  INFO chamber pressure stable 5.0 mTorr
+  WARN detected 응집
+  WARN ESD fail
+  INFO exhaust flow nominal
+  INFO interlock cleared
+EndOfFile;
+
+LotID "LOT9889";
+WaferID "W15";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_D16";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0027 -11.57 -114.76 10.02 images/class_1/CASE0027.jpg;
+EventList
+  DETAIL 비저항 저하
+  WARN ALARM 마모
+  INFO recipe CLEAN_D16 started
+  WARN level 잔량
+  INFO wafer loaded slot 23 carrier LOT9889
+  ALARM LOW TOC high
+  INFO robot handoff complete
+  INFO 슬롯 매핑 확인 완료
+EndOfFile;
+
+LotID "LOT9337";
+WaferID "W23";
+StepID "metal";
+InspectionStationID "SPUTTER01";
+Recipe "METAL_C63";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0028 -4.7 -50.27 9.2 images/class_5/CASE0028.jpg;
+EventList
+  WARN gas 유량
+  DETAIL 아킹
+  WARN NODULE detect 타깃
+  WARN LOW 출력
+  WARN queue time 12 min remaining
+  INFO chamber pressure stable 5.0 mTorr
+  INFO exhaust flow nominal
+  INFO recipe METAL_C63 started
+EndOfFile;
+
+LotID "LOT6272";
+WaferID "W07";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_B83";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0029 -9.15 140.76 4.2 images/class_3/CASE0029.jpg;
+EventList
+  INFO chamber pressure stable 5.0 mTorr
+  INFO robot handoff complete
+  WARN NODULE detect
+  WARN DI 비저항
+  DETAIL transducer 출력
+  INFO MFC setpoint reached
+  WARN MEGASONIC POWER LOW
+  INFO exhaust flow nominal
+EndOfFile;
+
+LotID "LOT6383";
+WaferID "W22";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_D50";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0030 19.78 87.76 2.21 images/class_1/CASE0030.jpg;
+EventList
+  DETAIL 비저항 저하
+  INFO recipe CLEAN_D50 started
+  INFO robot handoff complete
+  WARN OVERPOLISH 과연마
+  INFO 슬롯 매핑 확인 완료
+  INFO chamber pressure stable 5.0 mTorr
+  WARN FILM 막
+  WARN DI WATER TOC
+EndOfFile;
+
+LotID "LOT4945";
+WaferID "W16";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_B39";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0031 147.81 -61.43 11.74 images/class_4/CASE0031.jpg;
+EventList
+  INFO interlock cleared
+  WARN SHOWERHEAD CLOG
+  WARN queue time 12 min remaining
+  DETAIL found 마크 실패
+  ERROR OVERLAY alignment not
+  WARN cassette misalign
+  INFO robot handoff complete
+  INFO exhaust flow nominal
+EndOfFile;
+
+LotID "LOT1132";
+WaferID "W19";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_A87";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0032 85.95 112.94 4.52 images/class_1/CASE0032.jpg;
+EventList
+  DETAIL 비저항 저하
+  INFO chamber pressure stable 5.0 mTorr
+  INFO wafer loaded slot 19 carrier LOT1132
+  WARN DRIFT 초점
+  INFO recipe CLEAN_A87 started
+  INFO interlock cleared
+  ERROR WATER TOC 초순수
+  WARN dishing 시간
+EndOfFile;
+
+LotID "LOT3695";
+WaferID "W09";
+StepID "metal";
+InspectionStationID "PLATER03";
+Recipe "METAL_D47";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0033 -142.49 115.27 6.82 images/class_4/CASE0033.jpg;
+EventList
+  DETAIL 시드
+  INFO wafer loaded slot 15 carrier LOT3695
+  WARN queue time 12 min remaining
+  ALARM SEED plating current
+  WARN of 유량
+  WARN OVERPOLISH erosion
+  INFO 슬롯 매핑 확인 완료
+  INFO exhaust flow nominal
+EndOfFile;
+
+LotID "LOT2035";
+WaferID "W21";
+StepID "unknown";
+InspectionStationID "ROBOT02";
+Recipe "GEN_D99";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0034 34.7 131.72 3.5 images/class_1/CASE0034.jpg;
+EventList
+  INFO 온도 안정화 완료
+  ALARM CROSS queue time
+  WARN RINSE 시간
+  WARN SHOWERHEAD CLOG
+  DETAIL 큐타임
+  INFO chamber pressure stable 5.0 mTorr
+  INFO MFC setpoint reached
+  INFO exhaust flow nominal
+EndOfFile;
+
+LotID "LOT8264";
+WaferID "W15";
+StepID "clean";
+InspectionStationID "SPINDRYER01";
+Recipe "CLEAN_B56";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0035 86.59 28.79 3.47 images/class_1/CASE0035.jpg;
+EventList
+  WARN CURRENT dose
+  INFO exhaust flow nominal
+  INFO MFC setpoint reached
+  INFO wafer loaded slot 8 carrier LOT8264
+  DETAIL low 건조
+  INFO 온도 안정화 완료
+  ALARM DRY FAIL flow
+  WARN FLOW 잔량
+EndOfFile;
+
+LotID "LOT9850";
+WaferID "W09";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_B24";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0036 43.0 -140.65 11.98 images/class_4/CASE0036.jpg;
+EventList
+  INFO interlock cleared
+  INFO recipe ETCH_B24 started
+  WARN FOCUS SPEC
+  ERROR MFC FLOW DEVIATION
+  INFO 온도 안정화 완료
+  INFO MFC setpoint reached
+  WARN AGGLOMERATE detected
+  DETAIL flow 유량 이탈
+EndOfFile;
+
+LotID "LOT2768";
+WaferID "W16";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_D19";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0037 -25.86 98.23 4.91 images/class_1/CASE0037.jpg;
+EventList
+  ALARM DI WATER TOC
+  WARN low 부족
+  WARN defect recipe
+  INFO interlock cleared
+  INFO MFC setpoint reached
+  WARN queue time 12 min remaining
+  INFO 슬롯 매핑 확인 완료
+  DETAIL high 저하
+EndOfFile;
+
+LotID "LOT7992";
+WaferID "W11";
+StepID "etch";
+InspectionStationID "ETCHER03";
+Recipe "ETCH_C57";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0038 -118.92 2.22 2.03 images/class_3/CASE0038.jpg;
+EventList
+  INFO MFC setpoint reached
+  DETAIL redeposition 챔버
+  WARN BURN 탄화
+  WARN ERROR found
+  ALARM CHAMBER DEPOSIT polymer
+  INFO wafer loaded slot 14 carrier LOT7992
+  INFO 슬롯 매핑 확인 완료
+  INFO robot handoff complete
+EndOfFile;
+
+LotID "LOT2773";
+WaferID "W12";
+StepID "thermal";
+InspectionStationID "FURNACE01";
+Recipe "THERMAL_C24";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0039 -122.47 9.14 4.64 images/class_1/CASE0039.jpg;
+EventList
+  INFO chamber pressure stable 5.0 mTorr
+  WARN FALSE recipe
+  INFO robot handoff complete
+  WARN vacuum 자국
+  INFO wafer loaded slot 25 carrier LOT2773
+  WARN queue time 12 min remaining
+  DETAIL 보트
+  WARN CONTAMINATION quartz particle
+EndOfFile;
+
+LotID "LOT3578";
+WaferID "W12";
+StepID "thermal";
+InspectionStationID "RTP02";
+Recipe "THERMAL_C51";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0040 -136.37 -31.42 7.27 images/class_4/CASE0040.jpg;
+EventList
+  INFO exhaust flow nominal
+  INFO 온도 안정화 완료
+  INFO 슬롯 매핑 확인 완료
+  INFO MFC setpoint reached
+  ALARM RTP deviation 온도
+  WARN nuisance defect
+  WARN ESC CLAMP
+  DETAIL 오버슈트
+EndOfFile;
+
+LotID "LOT5938";
+WaferID "W07";
+StepID "litho";
+InspectionStationID "TRACK01";
+Recipe "LITHO_B42";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0041 139.86 -98.44 11.38 images/class_1/CASE0041.jpg;
+EventList
+  INFO 온도 안정화 완료
+  DETAIL thickness alarm 편차
+  ALARM COAT THICKNESS resist
+  WARN gas 유량
+  INFO exhaust flow nominal
+  WARN high 저하
+  INFO recipe LITHO_B42 started
+  INFO wafer loaded slot 3 carrier LOT5938
+EndOfFile;
+
+LotID "LOT2443";
+WaferID "W14";
+StepID "thermal";
+InspectionStationID "RTP02";
+Recipe "THERMAL_A41";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0042 -90.82 30.72 9.17 images/class_4/CASE0042.jpg;
+EventList
+  WARN CLOG pressure
+  WARN LOW high
+  ALARM pyrometer deviation 온도
+  INFO recipe THERMAL_A41 started
+  DETAIL 오버슈트
+  INFO interlock cleared
+  WARN queue time 12 min remaining
+  INFO MFC setpoint reached
+EndOfFile;
+
+LotID "LOT3902";
+WaferID "W25";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D69";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0043 -138.72 -39.38 3.59 images/class_6/CASE0043.jpg;
+EventList
+  WARN sensitivity 오검출
+  INFO 슬롯 매핑 확인 완료
+  DETAIL 드리프트
+  INFO chamber pressure stable 5.0 mTorr
+  WARN vacuum 척
+  WARN image blur 초점
+  INFO wafer loaded slot 10 carrier LOT3902
+  INFO robot handoff complete
+EndOfFile;
+
+LotID "LOT9307";
+WaferID "W13";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D84";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0044 -38.14 -65.13 5.02 images/class_6/CASE0044.jpg;
+EventList
+  INFO 슬롯 매핑 확인 완료
+  INFO recipe GEN_D84 started
+  INFO exhaust flow nominal
+  INFO wafer loaded slot 11 carrier LOT9307
+  WARN HIGH 초과
+  DETAIL 초점
+  WARN SEM image blur
+  WARN detected 슬러리
+EndOfFile;
+
+LotID "LOT6482";
+WaferID "W03";
+StepID "cvd";
+InspectionStationID "CVD04";
+Recipe "CVD_C22";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0045 -144.53 -57.34 11.42 images/class_1/CASE0045.jpg;
+EventList
+  WARN not found
+  DETAIL 온도 편차
+  INFO MFC setpoint reached
+  ALARM DEVIATION temp 존별
+  INFO exhaust flow nominal
+  INFO recipe CVD_C22 started
+  INFO chamber pressure stable 5.0 mTorr
+  WARN OUT 이탈
+EndOfFile;
+
+LotID "LOT4145";
+WaferID "W08";
+StepID "cvd";
+InspectionStationID "CVD09";
+Recipe "CVD_B29";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0046 139.68 85.31 10.87 images/class_1/CASE0046.jpg;
+EventList
+  DETAIL 존별 온도
+  INFO interlock cleared
+  WARN HEATER ZONE temp
+  INFO MFC setpoint reached
+  WARN robot blade
+  INFO chamber pressure stable 5.0 mTorr
+  INFO robot handoff complete
+  WARN TIME 린스
+EndOfFile;
+
+LotID "LOT8218";
+WaferID "W15";
+StepID "cmp";
+InspectionStationID "POLISHER01";
+Recipe "CMP_C58";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0047 95.01 115.39 11.18 images/class_2/CASE0047.jpg;
+EventList
+  INFO recipe CMP_C58 started
+  ALARM SLURRY detected 슬러리
+  INFO MFC setpoint reached
+  DETAIL 응집
+  INFO robot handoff complete
+  WARN RF 전력
+  INFO interlock cleared
+  WARN queue 초과
+EndOfFile;
+
+LotID "LOT7495";
+WaferID "W17";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_C40";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0048 -59.65 -135.68 5.15 images/class_1/CASE0048.jpg;
+EventList
+  WARN WALL DEPOSIT
+  INFO chamber pressure stable 5.0 mTorr
+  ERROR BEAM CURRENT UNSTABLE
+  WARN HEATER temp
+  INFO 온도 안정화 완료
+  INFO interlock cleared
+  DETAIL 빔 전류
+  INFO 슬롯 매핑 확인 완료
+EndOfFile;
+
+LotID "LOT2029";
+WaferID "W04";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D86";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0049 40.7 144.31 3.19 images/class_1/CASE0049.jpg;
+EventList
+  WARN adhesion blister
+  WARN MFC of
+  INFO robot handoff complete
+  WARN CROSS CONTAMINATION exceed
+  INFO exhaust flow nominal
+  INFO chamber pressure stable 5.0 mTorr
+  INFO 온도 안정화 완료
+  DETAIL 초과
+EndOfFile;
+
+LotID "LOT2106";
+WaferID "W12";
+StepID "litho";
+InspectionStationID "SCANNER02";
+Recipe "LITHO_B94";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0050 -139.01 44.07 3.58 images/class_4/CASE0050.jpg;
+EventList
+  INFO wafer loaded slot 7 carrier LOT2106
+  DETAIL SPEC defocus error 실패
+  INFO recipe LITHO_B94 started
+  WARN CONTAMINATION 오염
+  INFO chamber pressure stable 5.0 mTorr
+  INFO 슬롯 매핑 확인 완료
+  WARN detected 응집
+  ERROR FOCUS OFFSET OUT
+EndOfFile;
+
+LotID "LOT5476";
+WaferID "W04";
+StepID "litho";
+InspectionStationID "TRACK01";
+Recipe "LITHO_C65";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0051 -16.23 65.3 2.17 images/class_3/CASE0051.jpg;
+EventList
+  INFO wafer loaded slot 18 carrier LOT5476
+  DETAIL 기포
+  WARN plating low
+  INFO exhaust flow nominal
+  INFO recipe LITHO_C65 started
+  ERROR pump air 디스펜스
+  WARN detected 응집
+  WARN queue time 12 min remaining
+EndOfFile;
+
+LotID "LOT8325";
+WaferID "W02";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_C88";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0052 134.65 -38.4 9.2 images/class_4/CASE0052.jpg;
+EventList
+  DETAIL spike
+  INFO recipe IMPLANT_C88 started
+  INFO wafer loaded slot 25 carrier LOT8325
+  WARN RESIST outgassing pressure
+  INFO chamber pressure stable 5.0 mTorr
+  WARN DI RESISTIVITY
+  WARN DRIFT blur
+  INFO 슬롯 매핑 확인 완료
+EndOfFile;
+
+LotID "LOT9674";
+WaferID "W12";
+StepID "unknown";
+InspectionStationID "ROBOT02";
+Recipe "GEN_D50";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0053 93.15 140.27 11.84 images/class_3/CASE0053.jpg;
+EventList
+  WARN 잔류 돌기
+  INFO interlock cleared
+  WARN queue time 12 min remaining
+  INFO recipe GEN_D50 started
+  INFO 슬롯 매핑 확인 완료
+  DETAIL 자국
+  ALARM CHUCK MARK vacuum
+  WARN TARGET 타깃
+EndOfFile;
+
+LotID "LOT9882";
+WaferID "W10";
+StepID "clean";
+InspectionStationID "WETBENCH02";
+Recipe "CLEAN_C30";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0054 -15.01 54.03 4.27 images/class_1/CASE0054.jpg;
+EventList
+  WARN plating low
+  DETAIL OF bath 농도
+  INFO chamber pressure stable 5.0 mTorr
+  ALARM CHEMICAL CONC OUT
+  INFO MFC setpoint reached
+  WARN defocus 보정
+  INFO 슬롯 매핑 확인 완료
+  WARN queue time 12 min remaining
+EndOfFile;
+
+LotID "LOT3114";
+WaferID "W14";
+StepID "unknown";
+InspectionStationID "LOADPORT01";
+Recipe "GEN_A25";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0055 97.57 -141.49 0.74 images/class_2/CASE0055.jpg;
+EventList
+  WARN particle monitor
+  WARN OVERPOLISH erosion
+  ALARM SCRATCH cassette 카세트
+  WARN queue time 12 min remaining
+  INFO recipe GEN_A25 started
+  INFO MFC setpoint reached
+  INFO 온도 안정화 완료
+  DETAIL 정렬
+EndOfFile;
+
+LotID "LOT4453";
+WaferID "W25";
+StepID "unknown";
+InspectionStationID "SEM01";
+Recipe "GEN_D89";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0056 142.61 -110.77 4.57 images/class_6/CASE0056.jpg;
+EventList
+  WARN SEM DRIFT image
+  INFO recipe GEN_D89 started
+  INFO MFC setpoint reached
+  INFO wafer loaded slot 16 carrier LOT4453
+  DETAIL 초점
+  INFO 슬롯 매핑 확인 완료
+  WARN CLOG 차압
+  WARN quartz particle
+EndOfFile;
+
+LotID "LOT6228";
+WaferID "W08";
+StepID "unknown";
+InspectionStationID "LOADPORT01";
+Recipe "GEN_D25";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0057 140.01 -85.46 4.36 images/class_2/CASE0057.jpg;
+EventList
+  INFO robot handoff complete
+  DETAIL 카세트
+  INFO chamber pressure stable 5.0 mTorr
+  ALARM SCRATCH cassette misalign
+  INFO MFC setpoint reached
+  WARN pump air
+  WARN PEELING loss
+  INFO recipe GEN_D25 started
+EndOfFile;
+
+LotID "LOT9108";
+WaferID "W20";
+StepID "litho";
+InspectionStationID "TRACK01";
+Recipe "LITHO_D46";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0058 -38.04 146.04 6.78 images/class_3/CASE0058.jpg;
+EventList
+  DETAIL 디스펜스
+  INFO MFC setpoint reached
+  WARN MEGASONIC transducer
+  ALARM BUBBLE pump air
+  WARN low 전구체
+  INFO wafer loaded slot 18 carrier LOT9108
+  INFO 온도 안정화 완료
+  INFO chamber pressure stable 5.0 mTorr
+EndOfFile;
+
+LotID "LOT4261";
+WaferID "W20";
+StepID "clean";
+InspectionStationID "SPINDRYER01";
+Recipe "CLEAN_D74";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0059 94.72 -39.49 8.15 images/class_1/CASE0059.jpg;
+EventList
+  ERROR WATERMARK DRY FAIL
+  DETAIL 건조 불량
+  WARN robot 중
+  WARN CONTAMINATION quartz
+  INFO 온도 안정화 완료
+  INFO chamber pressure stable 5.0 mTorr
+  INFO interlock cleared
+  INFO robot handoff complete
+EndOfFile;
+
+LotID "LOT1436";
+WaferID "W20";
+StepID "implant";
+InspectionStationID "IMPLANTER01";
+Recipe "IMPLANT_D43";
+DefectRecordSpec 5 DEFECTID XREL YREL DSIZE IMAGEPATH;
+DefectList
+  CASE0060 61.73 5.6 6.82 images/class_1/CASE0060.jpg;
+EventList
+  WARN BEAM CURRENT dose
+  INFO 온도 안정화 완료
+  INFO 슬롯 매핑 확인 완료
+  INFO recipe IMPLANT_D43 started
+  DETAIL uniformity 불안정
+  INFO wafer loaded slot 15 carrier LOT1436
+  WARN DETECT sensitivity
+  WARN image 드리프트
+EndOfFile;

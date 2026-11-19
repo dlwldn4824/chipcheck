@@ -18,17 +18,31 @@ class KlarfLikeAdapter:
     name = "klarf_like"
 
     def parse(self, raw: str) -> list[DefectEvent]:
+        """파일 하나에 웨이퍼 레코드가 여러 개 들어 있어도 각각 따로 읽는다.
+
+        실제 KLARF도 한 로트의 웨이퍼를 이어 붙여 쓴다. 블록이 끝나면
+        (EndOfFile 또는 다음 LotID) 지금까지 모은 헤더·결함·알람을 한 덩어리로
+        닫는다. 그래야 알람 문구가 다른 웨이퍼로 새지 않는다.
+        """
+        out: list[DefectEvent] = []
         header: dict[str, str] = {}
         columns: list[str] = []
         rows: list[list[str]] = []
         alarms: list[str] = []
         mode = None
 
+        def flush() -> None:
+            nonlocal header, rows, alarms, mode
+            if rows:
+                out.extend(self._events(header, columns, rows, alarms))
+            header, rows, alarms, mode = {}, [], [], None
+
         for line in raw.splitlines():
             s = line.strip()
-            if not s:
+            if not s or s.startswith("#"):
                 continue
-            if s.startswith("#"):
+            if s.startswith("EndOfFile"):
+                flush()
                 continue
             if s.startswith("DefectRecordSpec"):
                 columns = s.replace(";", "").split()[2:]
@@ -40,10 +54,10 @@ class KlarfLikeAdapter:
             if s.startswith("EventList"):
                 mode = "events"
                 continue
+            if s.startswith("SummaryList"):
+                mode = None
+                continue
             if mode == "defects":
-                if s.startswith(("SummaryList", "EndOfFile")):
-                    mode = None
-                    continue
                 rows.append(s.replace(";", "").split())
                 continue
             if mode == "events":
@@ -51,10 +65,17 @@ class KlarfLikeAdapter:
                 continue
             m = _KV.match(s)
             if m:
-                header[m.group(1)] = m.group(2).strip().strip('"')
+                key = m.group(1)
+                if key == "LotID" and rows:
+                    flush()          # EndOfFile 없이 다음 레코드가 시작된 경우
+                header[key] = m.group(2).strip().strip('"')
+        flush()
+        return out
 
+    @staticmethod
+    def _events(header, columns, rows, alarms) -> list[DefectEvent]:
         text_blob = "  ".join(alarms)
-        out: list[DefectEvent] = []
+        out = []
         for r in rows:
             rec = dict(zip(columns, r))
             geom = {}
@@ -74,7 +95,7 @@ class KlarfLikeAdapter:
                 recipe=header.get("Recipe") or None,
                 geometry=geom,
                 text=text_blob,
-                raw={"header": header, "record": rec},
+                raw={"header": dict(header), "record": rec},
             ))
         return out
 
